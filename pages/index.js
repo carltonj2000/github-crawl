@@ -13,7 +13,10 @@ export default function Home() {
         fetch("https://api.github.com/graphql", {
           method: "POST",
           headers: { Authorization: `${authorization}` },
-          body: JSON.stringify({ query: getReposQ() }),
+          body: JSON.stringify({
+            query: getReposQ(),
+            variables: { perPage: 5 },
+          }),
         })
       )
       .then((res) => res.json())
