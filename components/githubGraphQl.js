@@ -1,5 +1,6 @@
-export const getReposQ = () => {
-  return `query ($perPage: Int!, $after: String) {
+import { useEffect, useState, useReducer } from "react";
+
+export const getReposQ = `query ($perPage: Int!, $after: String) {
   viewer {
     login
     repositories(first: $perPage, after: $after) {
@@ -7,6 +8,9 @@ export const getReposQ = () => {
       edges {
         node {
           name
+          owner {
+            login
+          }
         }
         cursor
       }
@@ -19,4 +23,16 @@ export const getReposQ = () => {
   }
 }
 `;
+
+export const fetchGraphQL = async (query, variables, authorization) => {
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: authorization,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query, variables }),
+  });
+
+  return await response.json();
 };
