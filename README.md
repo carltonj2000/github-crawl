@@ -2,6 +2,13 @@
 
 Search my github account for various things.
 
+Pulled 400 repos on 8/12/2021 with a on HD size 742 MBytes.
+
+Eventually get ws working for realtime updates of:
+
+- progress of pulling repos
+- progress of searching repos
+
 Get step 2.3 working from
 https://relay.dev/docs/getting-started/step-by-step-guide/
 

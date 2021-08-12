@@ -13,6 +13,8 @@ const postHeader = {
 export default function Home() {
   const [repos, reposSet] = useState({});
   const [authorization, authorizationSet] = useState(null);
+  const [postgres, postgresSet] = useState([]);
+  const [selectedPostgres, selectedPostgresSet] = useState(null);
   const query = getReposQ;
   let variable = { perPage: 100 };
 
@@ -53,6 +55,16 @@ export default function Home() {
     console.log({ json });
   };
 
+  const searchRepos = async () => {
+    const token = await fetch("/api/searchRepos");
+    const json = await token.json();
+    postgresSet(json);
+  };
+
+  const selectRepo = (sel) => {
+    selectedPostgresSet(sel);
+  };
+
   useEffect(() => {
     const getAuthorization = async () => {
       const token = await fetch("/api/token");
@@ -77,7 +89,7 @@ export default function Home() {
         <header className="bg-green-300 flex justify-center py-5">
           <h1 className="">GitHub Crawler GraphQl</h1>
         </header>
-        <section className="flex flex-row max-w-screen-lg mx-auto justify-center">
+        <section className="flex flex-row max-w-screen-xl mx-auto justify-center">
           <button
             onClick={getRepos}
             className="px-4 py-2 m-1 shadow bg-indigo-200 rounded hover:shadow-lg
@@ -99,6 +111,47 @@ export default function Home() {
           >
             Pull Repos
           </button>
+        </section>
+        <section className="flex flex-col max-w-screen-xl mx-auto justify-center">
+          <div className="flex flex-col max-w-screen-xl mx-auto justify-center">
+            <button
+              onClick={searchRepos}
+              className="px-4 py-2 m-1 shadow bg-indigo-200 rounded hover:shadow-lg
+            hover:bg-indigo-300"
+            >
+              Search Repos
+            </button>
+          </div>
+          <div className="my-2">
+            {postgres.map((pg, idx) => (
+              <span
+                key={pg.repo}
+                className={`px-3 py-1 rounded ${
+                  idx === selectedPostgres ? "bg-indigo-100" : ""
+                }`}
+                onClick={() => selectRepo(idx)}
+              >
+                {pg.repo}
+              </span>
+            ))}
+            <div className="bg-green-50 h-1 m-1"></div>
+            {selectedPostgres === null ? null : (
+              <span className="flex justify-center">
+                {postgres[selectedPostgres].date}
+              </span>
+            )}
+          </div>
+          <div className="bg-green-50 h-1 m-1"></div>
+          {selectedPostgres === null ? null : (
+            <div className="flex text-xs">
+              <code className="border">
+                <pre>{postgres[selectedPostgres].package}</pre>
+              </code>
+              <code className="border">
+                <pre>{postgres[selectedPostgres].readme}</pre>
+              </code>
+            </div>
+          )}
         </section>
       </main>
 

@@ -11,6 +11,7 @@ export const getReposQ = `query ($perPage: Int!, $after: String) {
           owner {
             login
           }
+          pushedAt
         }
         cursor
       }
