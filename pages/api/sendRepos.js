@@ -16,7 +16,7 @@ export const latestRepoFile = () => {
       const isRepoJson = /repos-(\d{4})-(\d{2})-(\d{2})\.json/.test(file);
       return isFile && isRepoJson;
     })
-    .sort((a, b) => (a > b ? 1 : -1))[0];
+    .sort((a, b) => (a < b ? 1 : -1))[0];
   return path.join(baseDir, repoFile);
 };
 
