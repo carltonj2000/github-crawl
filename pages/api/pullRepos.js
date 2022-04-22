@@ -19,11 +19,16 @@ export default (req, res) => {
       console.log(`${i} Skipping ${login} repo ${repo}`);
       continue;
     }
+
     const cwd = path.join(baseDir, repo);
-    if (fs.existsSync(cwd)) {
-      execSync(`git pull`, { cwd });
-    } else {
-      execSync(`git clone ${gitRepo(repo)} ${cwd}`);
+    try {
+      if (fs.existsSync(cwd)) {
+        execSync(`git pull`, { cwd });
+      } else {
+        execSync(`git clone ${gitRepo(repo)} ${cwd}`);
+      }
+    } catch {
+      console.log(`continuing after error`);
     }
     console.log(`${i} cloned ${repo}`);
   }
