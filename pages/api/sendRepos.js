@@ -2,7 +2,8 @@ import * as path from "path";
 import * as fs from "fs";
 import { format } from "date-fns";
 
-export const baseDir = "/media/renderws/carltonData/cjGitHub/carltonj2000";
+export const baseDir = "/renderws/carltonData/cjGitHub/carltonj2000";
+//export const baseDir = "/media/renderws/carltonData/cjGitHub/carltonj2000";
 
 export const reposFile = () =>
   path.join(baseDir, `repos-${format(new Date(), "yyyy-MM-dd")}.json`);
