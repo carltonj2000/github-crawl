@@ -4,7 +4,7 @@ import { execSync } from "child_process";
 
 import { latestRepoFile, baseDir } from "./sendRepos";
 
-const gitRepo = (repo) => `https://github.com/carltonj2000/${repo}`;
+const gitRepo = (repo) => `git@github.com/carltonj2000/${repo}`;
 
 export default (req, res) => {
   const repoFile = latestRepoFile();
