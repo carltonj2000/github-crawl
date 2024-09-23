@@ -24,7 +24,6 @@ Verify .env.local contain github tokens according to this format.
 
 ```
 GITHUB_TOKEN=ghp_stringHere
-GITHUB_TOKEN_PUBLIC=ghp_anotherStringHere
 ```
 
 Generate tokens on github via

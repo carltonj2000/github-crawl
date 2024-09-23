@@ -4,7 +4,7 @@ import { execSync } from "child_process";
 
 import { latestRepoFile, baseDir } from "./sendRepos";
 
-const gitRepo = (repo) => `git@github.com/carltonj2000/${repo}`;
+const gitRepo = (repo) => `git@github.com:carltonj2000/${repo}`;
 
 export default (req, res) => {
   const repoFile = latestRepoFile();
@@ -20,16 +20,18 @@ export default (req, res) => {
       continue;
     }
 
-    const cwd = path.join(baseDir, repo);
+    let cwd = path.join(baseDir, repo);
     try {
       if (fs.existsSync(cwd)) {
         execSync(`git pull`, { cwd });
+        console.log(`${i} pulled ${repo}`);
       } else {
         execSync(`git clone ${gitRepo(repo)} ${cwd}`);
+        console.log(`${i} cloned ${repo}`);
       }
     } catch {
       console.log(`continuing after error`);
     }
-    console.log(`${i} cloned ${repo}`);
   }
+  console.log(`Finished!`);
 };
